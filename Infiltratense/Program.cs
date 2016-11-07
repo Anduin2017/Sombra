@@ -16,13 +16,17 @@ namespace Infiltratense
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("\n\n Infiltratense by Obisoft.\n\n Version : " + Strings.Version);
             if (args.Length > 0)
             {
                 var Arg = args[0];
-                switch (Arg.Trim('-'))
+                switch (Arg.Trim('-').Substring(0,1))
                 {
                     case "v":
-                        Console.WriteLine("\n\n\n Infiltratense by Obisoft.\n\n Version : " + Strings.Version);
+                        break;
+                    case "h":
+                        Console.WriteLine("\n\n-v -version\t\tView current version number.");
+                        Console.WriteLine("-h -help\t\tView help.");
                         break;
                 }
                 return;
@@ -33,68 +37,14 @@ namespace Infiltratense
                 .UseProtectorService(Disable: false, Debug: true)
                 .UseStartWithBootService(Set: false)
                 .UseStartUp<StartUp>();
-
-            //ConsoleHelper.hideConsole();
 #else
             var host = new HostService()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: false, ForceCurrent: false)
                 .UseProtectorService(Disable: false, Debug: false)
-                .UseStartWithBootService(Set: false)
+                .UseStartWithBootService(Set: true)
                 .UseStartUp<StartUp>();
 #endif
             host.Run();
-        }
-    }
-
-    /// <summary>
-    /// 控制台帮助类
-    /// </summary>
-    public static class ConsoleHelper
-    {
-        /// <summary>
-        /// 获取窗口句柄
-        /// </summary>
-        /// <param name="lpClassName"></param>
-        /// <param name="lpWindowName"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        /// <summary>
-        /// 设置窗体的显示与隐藏
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="nCmdShow"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool ShowWindow(IntPtr hWnd, uint nCmdShow);
-
-        /// <summary>
-        /// 隐藏控制台
-        /// </summary>
-        /// <param name="ConsoleTitle">控制台标题(可为空,为空则取默认值)</param>
-        public static void hideConsole(string ConsoleTitle = "")
-        {
-            ConsoleTitle = String.IsNullOrEmpty(ConsoleTitle) ? Console.Title : ConsoleTitle;
-            IntPtr hWnd = FindWindow("ConsoleWindowClass", ConsoleTitle);
-            if (hWnd != IntPtr.Zero)
-            {
-                ShowWindow(hWnd, 0);
-            }
-        }
-
-        /// <summary>
-        /// 显示控制台
-        /// </summary>
-        /// <param name="ConsoleTitle">控制台标题(可为空,为空则去默认值)</param>
-        public static void showConsole(string ConsoleTitle = "")
-        {
-            ConsoleTitle = String.IsNullOrEmpty(ConsoleTitle) ? Console.Title : ConsoleTitle;
-            IntPtr hWnd = FindWindow("ConsoleWindowClass", ConsoleTitle);
-            if (hWnd != IntPtr.Zero)
-            {
-                ShowWindow(hWnd, 1);
-            }
         }
     }
 }

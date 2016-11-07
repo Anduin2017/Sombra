@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace Infiltratense.Service
 {
@@ -11,7 +12,37 @@ namespace Infiltratense.Service
         public override void Run()
         {
             base.Run();
+            Thread.Sleep(500);
             Logger.PrintInfo("Infiltratense Started. Waitting for order...");
+            Logger.PrintInfo("----------------------------------------------------------------------------------------- ");
+            Logger.PrintInfo("----------------------------------------------------------------------------------------- ");
+            Logger.PrintInfo("----------------------------------------------------------------------------------------- ");
+            Logger.PrintInfo("                                                                                          ");
+            Logger.PrintInfo("                                                                        # #               ");
+            Logger.PrintInfo("        # # # # # #                                                   #     #             ");
+            Logger.PrintInfo("            #                                                        #        #           ");
+            Logger.PrintInfo("            #                                                        #                    ");
+            Logger.PrintInfo("            #                                                        #                    ");
+            Logger.PrintInfo("            #                                                        #                    ");
+            Logger.PrintInfo("            #                                                 # # # # # # # #             ");
+            Logger.PrintInfo("            #                                                        #                    ");
+            Logger.PrintInfo("            #                                                        #                    ");
+            Logger.PrintInfo("            #                  #    # # # #                          #                    ");
+            Logger.PrintInfo("            #                   #  #        #                        #                    ");
+            Logger.PrintInfo("            #                   # #          #                       #                    ");
+            Logger.PrintInfo("            #                   #             #                      #                    ");
+            Logger.PrintInfo("            #                   #             #                      #                    ");
+            Logger.PrintInfo("            #                   #             #                      #                    ");
+            Logger.PrintInfo("            #                   #             #                      #                    ");
+            Logger.PrintInfo("            #                   #             #                      #                    ");
+            Logger.PrintInfo("            #                   #             #                      #                    ");
+            Logger.PrintInfo("      # # # # # # #             #             #                      #                    ");
+            Logger.PrintInfo("                                                                                          ");
+            Logger.PrintInfo("                                                                                          ");
+            Logger.PrintInfo("----------------------------------------------------------------------------------------- ");
+            Logger.PrintInfo("----------------------------------------------------------------------------------------- ");
+            Logger.PrintInfo($"--------------------------------------------------------------------Version :{Strings.Version}-- ");
+            Logger.PrintInfo($"--------------------------------------------------------------------Obisoft Corporation-- ");
         }
     }
 }

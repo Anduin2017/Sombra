@@ -26,8 +26,15 @@ namespace Infiltratense.Service
             {
                 Logger.PrintWarning("Deleting the old version...");
             }
-            File.Delete(CellFileInfo.CurrentPath + $@"\{Strings.ANameExe}");
-            File.Delete(CellFileInfo.CurrentPath + $@"\{Strings.BNameExe}");
+            try
+            {
+                File.Delete(CellFileInfo.CurrentPath + $@"\{Strings.ANameExe}");
+                File.Delete(CellFileInfo.CurrentPath + $@"\{Strings.BNameExe}");
+            }
+            catch (Exception e)
+            {
+                Logger.PrintError("Can not delete the old program! " + e.Message);
+            }
             if (!CellFileInfo.AHere())
                 CopyFile(CellFileInfo.ProgramFile, CellFileInfo.CurrentPath + $@"\{Strings.ANameExe}");
             if (!CellFileInfo.BHere())
@@ -64,7 +71,7 @@ namespace Infiltratense.Service
                     Logger.PrintWarning($"Only me running: {CellFileInfo.SelfName}, Starting {CellFileInfo.PartnerName}...");
                     try
                     {
-                        ProcessService.StartProcess( CellFileInfo.PartnerName, Debug);
+                        ProcessService.StartProcess(CellFileInfo.PartnerName, Debug);
                     }
                     catch (Exception e)
                     {
