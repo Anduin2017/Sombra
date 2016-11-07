@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{3CC1F87B-CD63-43FB-B022-ECDE61E323AE}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Infiltratense</RootNamespace>
     <AssemblyName>Infiltratense</AssemblyName>
@@ -31,7 +31,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Infiltratense.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +48,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Middleware\StartWithBootMiddleware.cs" />
+    <Compile Include="Middleware\AutoUpdateMiddleware.cs" />
+    <Compile Include="Middleware\ProtectorServiceMiddleware.cs" />
+    <Compile Include="Middleware\StartUpServiceMiddleware.cs" />
+    <Compile Include="Models\HostBuilder.cs" />
+    <Compile Include="Models\IHostBuilder.cs" />
+    <Compile Include="Models\ProcessInfo.cs" />
+    <Compile Include="Models\CellFileInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\HTTPService.cs" />
+    <Compile Include="Service\Logger.cs" />
+    <Compile Include="Service\ProcessService.cs" />
+    <Compile Include="Service\WinBooter.cs" />
+    <Compile Include="Service\Updator.cs" />
+    <Compile Include="Service\Protector.cs" />
+    <Compile Include="Service\StartUp.cs" />
+    <Compile Include="Strings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
