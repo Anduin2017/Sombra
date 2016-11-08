@@ -20,7 +20,7 @@ namespace Infiltratense
             if (args.Length > 0)
             {
                 var Arg = args[0];
-                switch (Arg.Trim('-').Substring(0,1))
+                switch (Arg.Trim('-').Substring(0, 1))
                 {
                     case "v":
                         break;
@@ -34,14 +34,16 @@ namespace Infiltratense
 #if DEBUG
             var host = new HostService()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: true, ForceCurrent: true)
-                .UseProtectorService(Disable: false, Debug: true)
+                .UseProtectorService(Disable: true, Debug: true)
                 .UseStartWithBootService(Set: false)
+                .UseReportService(TimeOut: 1000)
                 .UseStartUp<StartUp>();
 #else
             var host = new HostService()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: false, ForceCurrent: false)
                 .UseProtectorService(Disable: false, Debug: false)
                 .UseStartWithBootService(Set: true)
+                .UseReportService(TimeOut: 1000)
                 .UseStartUp<StartUp>();
 #endif
             host.Run();

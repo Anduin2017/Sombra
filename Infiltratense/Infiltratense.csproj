@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Middleware\ReportServiceMiddleware.cs" />
     <Compile Include="Middleware\StartWithBootMiddleware.cs" />
     <Compile Include="Middleware\AutoUpdateMiddleware.cs" />
     <Compile Include="Middleware\ProtectorServiceMiddleware.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="Service\HTTPService.cs" />
     <Compile Include="Service\Logger.cs" />
     <Compile Include="Service\ProcessService.cs" />
+    <Compile Include="Service\Reportor.cs" />
     <Compile Include="Service\WinBooter.cs" />
     <Compile Include="Service\Updator.cs" />
     <Compile Include="Service\Protector.cs" />
