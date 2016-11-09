@@ -33,20 +33,21 @@ namespace Infiltratense.Service
             }
             try
             {
-                string path = CellFileInfo.ProgramFile;
+                string path = CellFileInfo.ProgramFile + " -s";
                 RegistryKey rk = Registry.LocalMachine;
                 RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
                 if (Set)
                 {
                     rk2.SetValue(Strings.ProjectName, path);
+                    Logger.PrintSuccess("Successfully created the start up event!");
                 }
                 else
                 {
                     rk2.DeleteValue(Strings.ProjectName, false);
+                    Logger.PrintSuccess("Successfully removed the start up event!");
                 }
                 rk2.Close();
                 rk.Close();
-                Logger.PrintSuccess("Successfully created the start up event!");
             }
             catch (Exception e)
             {

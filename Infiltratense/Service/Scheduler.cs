@@ -40,14 +40,21 @@ namespace Infiltratense.Service
         }
         public static void DeleteEvent(string EventName)
         {
-            var _taskService = new TaskService();
-            if (_taskService.RootFolder.AllTasks.Where(t => t.Name == EventName).Count() > 0)
+            try
             {
-                _taskService.RootFolder.DeleteTask(EventName);
+                var _taskService = new TaskService();
+                if (_taskService.RootFolder.AllTasks.Where(t => t.Name == EventName).Count() > 0)
+                {
+                    _taskService.RootFolder.DeleteTask(EventName);
+                }
+                else
+                {
+                    Logger.PrintWarning("Old Event does not exist! ");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Logger.PrintWarning("Old Event does not exist! ");
+                Logger.PrintError("An error occured while trying to remove the task exist! " + e.Message);
             }
         }
 
