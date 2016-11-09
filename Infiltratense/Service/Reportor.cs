@@ -13,52 +13,69 @@ using System.Management;
 
 namespace Infiltratense.Service
 {
+
     public class Reporter : HostService, IService
     {
         private int TimeOut;
-        public Reporter(int TimeOut)
+        private bool Delay;
+        public Reporter(int TimeOut, bool Delay)
         {
             this.TimeOut = TimeOut;
+            this.Delay = Delay;
         }
         public override void Run()
         {
             base.Run();
-            int ClientHash = 0;
-            try
+            new Thread(() =>
             {
-                var SNumber = GetMotherBoardSerialNumber();
-                Logger.PrintInfo("Got Motherboard Serial Number" + SNumber);
-                Logger.Print("Preparing to submit to the server...");
-                ClientHash = SNumber.GetHashCode();
-            }
-            catch (Exception e)
-            {
-                Logger.PrintError("An error occured while trying to get motherborad serial number! " + e.Message);
-            }
-            while (true)
-            {
+                if (Delay)
+                {
+                    Thread.Sleep(2000);
+                }
+                int ClientHash = 0;
                 try
                 {
-                    var _model = new SubmitReport
-                    {
-                        ClientHash = ClientHash,
-                        CPUUsage = Counter.getCurrentCpuUsage(),
-                        AvailableRAM=Counter.getAvailableRAM()
-                    };
-                    Logger.PrintInfo($"CPU Usage: {_model.CPUUsage} Client Hash: {_model.ClientHash}");
-                    Logger.Print("Trying to submit the data to server...");
-                    var HTTP = new HTTPService();
-                    var Result = HTTP.Post(Strings.ServerAddress + "/api/SubmitReport", $"ClientHash={_model.ClientHash}&CPUUsage={_model.CPUUsage}&AvailableRAM={_model.AvailableRAM}");
-                    Logger.Print("Server Responsed: " + Result);
-                    Thread.Sleep(TimeOut);
+                    var SNumber = GetMotherBoardSerialNumber();
+                    Logger.PrintInfo("Got Motherboard Serial Number" + SNumber);
+                    Logger.Print("Preparing to submit to the server...");
+                    ClientHash = SNumber.GetHashCode();
                 }
                 catch (Exception e)
                 {
-                    Logger.PrintError("An error occured while Contacting the server! " + e.Message);
-                    Thread.Sleep(TimeOut);
+                    Logger.PrintError("An error occured while trying to get motherborad serial number! " + e.Message);
                 }
-            }
-
+                while (true)
+                {
+                    try
+                    {
+                        var _model = new SubmitReport
+                        {
+                            ClientHash = ClientHash,
+                            CPUUsage = Counter.getCurrentCpuUsage(),
+                            AvailableRAM = Counter.getAvailableRAM()
+                        };
+                        Logger.PrintInfo($"CPU Usage: {_model.CPUUsage} Client Hash: {_model.ClientHash}");
+                        Logger.Print("Trying to submit the data to server...");
+                        var HTTP = new HTTPService();
+                        var Result = HTTP.Post(Strings.ServerAddress + "/api/SubmitReport", $"ClientHash={_model.ClientHash}&CPUUsage={_model.CPUUsage}&AvailableRAM={_model.AvailableRAM}");
+                        var ServerResponse = JsonConvert.DeserializeObject<ServerResposne>(Result);
+                        if (ServerResponse.Code == 0)
+                        {
+                            Logger.PrintSuccess("Server Responsed: " + ServerResponse.Result);
+                        }
+                        else
+                        {
+                            Logger.PrintError("An error occoured while trying to contact the server! " + ServerResponse.Result);
+                        }
+                        Thread.Sleep(TimeOut);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.PrintError("An error occured while Contacting the server! " + e.Message);
+                        Thread.Sleep(TimeOut);
+                    }
+                }
+            }).Start();
         }
 
         private static string GetMotherBoardSerialNumber()
@@ -109,5 +126,12 @@ namespace Infiltratense.Service
         public virtual float AvailableRAM { get; set; }
 
         //public virtual DateTime SubmitTime { get; set; }
+    }
+
+    //{"Result":"Successfully Submited your report!","Code":0}
+    public class ServerResposne
+    {
+        public virtual int Code { get; set; }
+        public virtual string Result { get; set; }
     }
 }

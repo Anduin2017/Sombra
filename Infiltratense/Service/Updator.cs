@@ -29,7 +29,7 @@ namespace Infiltratense.Service
             Logger.Print("Checking for updates...");
             try
             {
-                Logger.PrintInfo($"Local  application version is: {CurrentVersion}");
+                Logger.PrintInfo($"Local application version is: {CurrentVersion}");
                 var HTTP = new HTTPService();
                 var HTTPResult = HTTP.Get(Strings.ServerAddress + "/api/InfVersion");
                 VersionCheckResult Result = JsonConvert.DeserializeObject<VersionCheckResult>(HTTPResult);
@@ -40,6 +40,7 @@ namespace Infiltratense.Service
                 }
                 else if (Result.Result.Trim() != CurrentVersion.Trim())
                 {
+                    Logger.PrintSuccess("Successfully downloaded the latest version...");
                     Logger.Print("Starting download the latest version...");
                     var DownloadVersion = HTTP.HttpDownloadFile(Result.DownloadUrl);
                     ProcessService.StartProcess(DownloadVersion, Debug);
@@ -47,7 +48,7 @@ namespace Infiltratense.Service
                 }
                 else
                 {
-                    Logger.Print("Already up-to-date!");
+                    Logger.PrintSuccess("Already up-to-date!");
                 }
             }
             catch (Exception e)

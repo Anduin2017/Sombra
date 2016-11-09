@@ -30,5 +30,11 @@ namespace Infiltratense.Service
             Console.WriteLine(Content);
             Console.ForegroundColor = ConsoleColor.White;
         }
+        public static void PrintSuccess(string Content)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(Content);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
     }
 }

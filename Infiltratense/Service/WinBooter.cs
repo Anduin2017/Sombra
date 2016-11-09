@@ -46,6 +46,7 @@ namespace Infiltratense.Service
                 }
                 rk2.Close();
                 rk.Close();
+                Logger.PrintSuccess("Successfully created the start up event!");
             }
             catch (Exception e)
             {

