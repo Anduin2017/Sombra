@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Infiltratense;
+using Sombra;
 
-namespace Infiltratense.Models
+namespace Sombra.Models
 {
     public static class ProcessInfo
     {

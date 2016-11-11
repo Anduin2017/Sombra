@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infiltratense", "Infiltratense\Infiltratense.csproj", "{3CC1F87B-CD63-43FB-B022-ECDE61E323AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sombra", "Sombra\Sombra.csproj", "{3CC1F87B-CD63-43FB-B022-ECDE61E323AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

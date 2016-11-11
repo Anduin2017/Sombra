@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Infiltratense.Models;
+using Sombra.Models;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
-using Infiltratense.Service;
+using Sombra.Service;
 using System.Net;
 using System.Management;
 
-namespace Infiltratense.Service
+namespace Sombra.Service
 {
 
     public class Reporter : HostService, IService
@@ -30,6 +30,7 @@ namespace Infiltratense.Service
             {
                 if (Delay)
                 {
+                    Logger.PrintSuccess("Report service started!");
                     Thread.Sleep(2000);
                 }
                 int ClientHash = 0;

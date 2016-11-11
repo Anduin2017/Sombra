@@ -1,10 +1,10 @@
-﻿using Infiltratense.Models;
+﻿using Sombra.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Infiltratense.Middleware
+namespace Sombra.Middleware
 {
     public static class StartUpServiceMiddleware
     {
@@ -12,6 +12,14 @@ namespace Infiltratense.Middleware
         {
             var StartUpClass = new T();
             app.InsertService(StartUpClass);
+            return app;
+        }
+    }
+    public static class ReactorMiddleware
+    {
+        public static IService UseReactor(this IService app, ReactorService reactor)
+        {
+            app.InsertService(reactor);
             return app;
         }
     }

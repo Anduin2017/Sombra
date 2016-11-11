@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Infiltratense.Models;
+using Sombra.Models;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
-using Infiltratense.Service;
+using Sombra.Service;
 using System.Net;
 
-namespace Infiltratense.Service
+namespace Sombra.Service
 {
     public class Updator : HostService, IService
     {
@@ -27,6 +27,19 @@ namespace Infiltratense.Service
         {
             base.Run();
             Logger.Print("Checking for updates...");
+            GetUpdate();
+            new Thread(() =>
+            {
+                while(true)
+                {
+                    Thread.Sleep(30000);
+                    Logger.Print("Checking for updates schedully...");
+                    GetUpdate();
+                }
+            }).Start();
+        }
+        public void GetUpdate()
+        {
             try
             {
                 Logger.PrintInfo($"Local application version is: {CurrentVersion}");
@@ -34,7 +47,7 @@ namespace Infiltratense.Service
                 var HTTPResult = HTTP.Get(Strings.ServerAddress + "/api/InfVersion");
                 VersionCheckResult Result = JsonConvert.DeserializeObject<VersionCheckResult>(HTTPResult);
                 Logger.PrintInfo($"Server application version is: {Result.Result}");
-                if(ForceCurrent)
+                if (ForceCurrent)
                 {
                     Logger.PrintWarning("Force current version. Won't do anything!");
                 }
@@ -56,7 +69,6 @@ namespace Infiltratense.Service
                 Logger.PrintError("Exception: " + e.Message);
             }
         }
-
     }
     public class VersionCheckResult
     {

@@ -1,11 +1,11 @@
-﻿using Infiltratense.Models;
-using Infiltratense.Service;
+﻿using Sombra.Models;
+using Sombra.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Infiltratense.Middleware
+namespace Sombra.Middleware
 {
     public static class TaskSchedulerMiddleware
     {

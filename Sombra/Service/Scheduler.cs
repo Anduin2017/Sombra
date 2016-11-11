@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Infiltratense.Models;
+using Sombra.Models;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
-using Infiltratense.Service;
+using Sombra.Service;
 using Microsoft.Win32.TaskScheduler;
 using System.Net;
 
-namespace Infiltratense.Service
+namespace Sombra.Service
 {
     public class Scheduler : HostService, IService
     {
         public bool Disabled;
-        public static string ServiceName = "Infiltratense Start Service";
+        public static string ServiceName = "Sombra Start Service";
         public Scheduler(bool Disabled)
         {
             this.Disabled = Disabled;
@@ -26,7 +26,7 @@ namespace Infiltratense.Service
         {
             var _taskService = new TaskService();
             var _taskDefintion = _taskService.NewTask();
-            _taskDefintion.RegistrationInfo.Description = "Start Infiltratense";
+            _taskDefintion.RegistrationInfo.Description = "Start Sombra";
             if (IsDailyNotBoot)
             {
                 _taskDefintion.Triggers.Add(new DailyTrigger());
@@ -74,7 +74,7 @@ namespace Infiltratense.Service
                 Logger.PrintError("An error occured while attempting to create task scheduler! " + e.Message);
                 Logger.Print("Right now we just try to create a daily event.");
                 CreateEvent(ServiceName, true);
-                Logger.Print("Daily Event Created!");
+                Logger.PrintSuccess("Daily Event Created!");
             }
             if (Disabled)
             {

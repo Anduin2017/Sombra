@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Infiltratense.Models;
+using Sombra.Models;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Newtonsoft.Json;
-using Infiltratense.Service;
+using Sombra.Service;
 using System.Net;
 using Microsoft.Win32;
 
-namespace Infiltratense.Service
+namespace Sombra.Service
 {
     public class WinBooter : HostService, IService
     {

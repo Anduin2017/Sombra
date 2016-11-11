@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Infiltratense.Service
+namespace Sombra.Service
 {
     public static class Logger
     {

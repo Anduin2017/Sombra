@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Infiltratense.Models
+namespace Sombra.Models
 {
     public static class CellFileInfo
     {

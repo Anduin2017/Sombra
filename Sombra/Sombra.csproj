@@ -7,8 +7,8 @@
     <ProjectGuid>{3CC1F87B-CD63-43FB-B022-ECDE61E323AE}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Infiltratense</RootNamespace>
-    <AssemblyName>Infiltratense</AssemblyName>
+    <RootNamespace>Sombra</RootNamespace>
+    <AssemblyName>Sombra</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Infiltratense.Program</StartupObject>
+    <StartupObject>Sombra.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Win32.TaskScheduler">

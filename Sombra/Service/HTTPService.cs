@@ -1,4 +1,4 @@
-﻿using Infiltratense.Models;
+﻿using Sombra.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Infiltratense.Service
+namespace Sombra.Service
 {
     public class HTTPService
     {
@@ -69,7 +69,7 @@ namespace Infiltratense.Service
             //直到request.GetResponse()程序才开始向目标网页发送Post请求
             Stream responseStream = response.GetResponseStream();
             //创建本地文件写入流
-            Stream stream = new FileStream(CellFileInfo.CurrentPath + @"\InfiltratenseDownloaded.exe", FileMode.Create);
+            Stream stream = new FileStream(CellFileInfo.CurrentPath + @"\SombraDownloaded.exe", FileMode.Create);
             byte[] bArr = new byte[1024];
             int size = responseStream.Read(bArr, 0, (int)bArr.Length);
             while (size > 0)
@@ -79,7 +79,7 @@ namespace Infiltratense.Service
             }
             stream.Close();
             responseStream.Close();
-            return CellFileInfo.CurrentPath + @"\InfiltratenseDownloaded.exe";
+            return CellFileInfo.CurrentPath + @"\SombraDownloaded.exe";
         }
     }
 }

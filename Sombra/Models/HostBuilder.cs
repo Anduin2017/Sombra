@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Infiltratense.Models
+namespace Sombra.Models
 {
     public class HostService : IService
     {
@@ -29,5 +29,10 @@ namespace Infiltratense.Models
             }
             return null;
         }
+    }
+
+    public class ReactorService : HostService, IService
+    {
+
     }
 }
