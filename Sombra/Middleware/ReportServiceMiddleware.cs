@@ -15,5 +15,10 @@ namespace Sombra.Middleware
             app.InsertService(_reporter);
             return app;
         }
+        public static IService UseServer(this IService app, IApplicationServer server)
+        {
+            app.InsertService(server);
+            return app;
+        }
     }
 }

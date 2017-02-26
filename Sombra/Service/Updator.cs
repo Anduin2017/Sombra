@@ -12,7 +12,7 @@ using System.Net;
 
 namespace Sombra.Service
 {
-    public class Updator : HostService, IService
+    public class Updator : HostBuilder, IService
     {
         public bool Debug;
         public bool ForceCurrent;

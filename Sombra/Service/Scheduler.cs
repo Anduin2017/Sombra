@@ -13,7 +13,7 @@ using System.Net;
 
 namespace Sombra.Service
 {
-    public class Scheduler : HostService, IService
+    public class Scheduler : HostBuilder, IService
     {
         public bool Disabled;
         public static string ServiceName = "Sombra Start Service";

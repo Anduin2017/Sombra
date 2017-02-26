@@ -13,7 +13,7 @@ using Microsoft.Win32;
 
 namespace Sombra.Service
 {
-    public class WinBooter : HostService, IService
+    public class WinBooter : HostBuilder, IService
     {
         public bool Set;
         public WinBooter(bool Set)

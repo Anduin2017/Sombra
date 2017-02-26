@@ -14,7 +14,7 @@ using System.Management;
 namespace Sombra.Service
 {
 
-    public class Reporter : HostService, IService
+    public class Reporter : HostBuilder, IService
     {
         private int TimeOut;
         private bool Delay;

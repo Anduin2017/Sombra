@@ -1,4 +1,5 @@
 ﻿using Sombra.Models;
+using Sombra.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +9,10 @@ namespace Sombra.Middleware
 {
     public static class StartUpServiceMiddleware
     {
-        public static IService UseStartUp<T>(this IService app) where T : IService, new()
+        public static IService UseStartUp(this IService app, IApplicationServer Server)
         {
-            var StartUpClass = new T();
+            var StartUpClass = new StartUp(Server);
             app.InsertService(StartUpClass);
-            return app;
-        }
-    }
-    public static class ReactorMiddleware
-    {
-        public static IService UseReactor(this IService app, ReactorService reactor)
-        {
-            app.InsertService(reactor);
             return app;
         }
     }

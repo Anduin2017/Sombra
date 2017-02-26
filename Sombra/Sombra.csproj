@@ -60,6 +60,7 @@
     <Compile Include="Middleware\StartUpServiceMiddleware.cs" />
     <Compile Include="Middleware\TaskSchedulerMiddleware.cs" />
     <Compile Include="Models\HostBuilder.cs" />
+    <Compile Include="Models\IApplicationBuilder.cs" />
     <Compile Include="Models\IHostBuilder.cs" />
     <Compile Include="Models\ProcessInfo.cs" />
     <Compile Include="Models\CellFileInfo.cs" />

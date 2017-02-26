@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Sombra.Models
 {
-    public class HostService : IService
+    public class HostBuilder : IService
     {
         public IService NextService { get; set; }
         public virtual void Run()
@@ -31,8 +31,4 @@ namespace Sombra.Models
         }
     }
 
-    public class ReactorService : HostService, IService
-    {
-
-    }
 }

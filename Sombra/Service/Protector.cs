@@ -10,7 +10,7 @@ using Sombra.Service;
 
 namespace Sombra.Service
 {
-    public class Protector : HostService, IService
+    public class Protector : HostBuilder, IService
     {
         public bool Debug;
         public bool Disable;

