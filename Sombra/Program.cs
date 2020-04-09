@@ -50,7 +50,7 @@ namespace Sombra
             var server = new SombraServer();
 
             var host = new HostBuilder()
-                .UseAutoUpdateService(CurrentVersion: Strings.Version, Debug: true, ForceCurrent: true)
+                .UseAutoUpdateService(currentVersion: Strings.Version, debug: true, forceCurrent: true)
                 .UseProtectorService(Disable: true, Debug: true)
                 .UseStartWithBootService(Set: false)
                 .UseTaskSchedulerService(Disabled: true)

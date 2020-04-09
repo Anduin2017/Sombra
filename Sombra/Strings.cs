@@ -13,9 +13,9 @@ namespace Sombra
         public static string BNameExe => "Sombrab.exe";
         public static string ServerAddress = "https://Obisoft.com.cn";
         public static string Version => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        public static string ConvertName(string Name)
+        public static string ConvertName(string name)
         {
-            return Name == ANameExe ? BNameExe : ANameExe;
+            return name == ANameExe ? BNameExe : ANameExe;
         }
     }
 }

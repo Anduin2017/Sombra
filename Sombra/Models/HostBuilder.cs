@@ -12,10 +12,10 @@ namespace Sombra.Models
         {
             NextService?.Run();
         }
-        public virtual void InsertService(IService NewService)
+        public virtual void InsertService(IService newService)
         {
-            NewService.NextService = NextService;
-            NextService = NewService;
+            newService.NextService = NextService;
+            NextService = newService;
         }
         public virtual T TryGetService<T>() where T : class
         {

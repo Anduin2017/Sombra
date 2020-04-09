@@ -9,9 +9,9 @@ namespace Sombra.Middleware
 {
     public static class AutoUpdateMiddleware
     {
-        public static IService UseAutoUpdateService(this IService app, string CurrentVersion, bool Debug = false, bool ForceCurrent = false)
+        public static IService UseAutoUpdateService(this IService app, string currentVersion, bool debug = false, bool forceCurrent = false)
         {
-            var _updator = new Updator(CurrentVersion, Debug, ForceCurrent);
+            var _updator = new Updator(currentVersion, debug, forceCurrent);
             app.InsertService(_updator);
             return app;
         }
